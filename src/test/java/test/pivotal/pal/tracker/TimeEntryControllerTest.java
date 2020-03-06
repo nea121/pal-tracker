@@ -17,11 +17,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
+//import org.junit.Test;
+
 public class TimeEntryControllerTest {
     private TimeEntryRepository timeEntryRepository;
     private TimeEntryController controller;
 
-    @BeforeEach
+   @BeforeEach
+   // @Before
     public void setUp() {
         timeEntryRepository = mock(TimeEntryRepository.class);
         controller = new TimeEntryController(timeEntryRepository);
@@ -54,11 +57,11 @@ public class TimeEntryControllerTest {
         TimeEntry expected = new TimeEntry(timeEntryId, projectId, userId, LocalDate.parse("2017-01-08"), 8);
         doReturn(expected)
             .when(timeEntryRepository)
-            .find(timeEntryId);
+            .get(timeEntryId);
 
         ResponseEntity<TimeEntry> response = controller.read(timeEntryId);
 
-        verify(timeEntryRepository).find(timeEntryId);
+        verify(timeEntryRepository).get(timeEntryId);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(expected);
     }
@@ -68,7 +71,7 @@ public class TimeEntryControllerTest {
         long nonExistentTimeEntryId = 1L;
         doReturn(null)
             .when(timeEntryRepository)
-            .find(nonExistentTimeEntryId);
+            .get(nonExistentTimeEntryId);
 
         ResponseEntity<TimeEntry> response = controller.read(nonExistentTimeEntryId);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
