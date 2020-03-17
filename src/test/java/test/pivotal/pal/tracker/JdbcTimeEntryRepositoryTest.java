@@ -67,7 +67,7 @@ public class JdbcTimeEntryRepositoryTest {
                         "VALUES (999, 123, 321, '2017-01-09', 8)"
         );
 
-        TimeEntry timeEntry = subject.find(999L);
+        TimeEntry timeEntry = subject.get(999L);
 
         assertThat(timeEntry.getId()).isEqualTo(999L);
         assertThat(timeEntry.getProjectId()).isEqualTo(123L);
@@ -78,7 +78,7 @@ public class JdbcTimeEntryRepositoryTest {
 
     @Test
     public void findReturnsNullWhenNotFound() {
-        TimeEntry timeEntry = subject.find(999L);
+        TimeEntry timeEntry = subject.get(999L);
 
         assertThat(timeEntry).isNull();
     }
